@@ -30,16 +30,27 @@ package com.openVideo.core
 			this.addChild(this._stageVideo);
 		}
 		
+		/**
+		 * Start ENTER_FRAME
+		 */
 		public function startScreenMovie():void
 		{
 			this.addEventListener(Event.ENTER_FRAME, update);
 		}
 		
+		/**
+		 * Add a pool
+		 * @param	arBMDClips
+		 */
 		public function addPool(arBMDClips:Vector.<BMDClip>):void
 		{
 			this._screen.pool = arBMDClips;
 		}
 		
+		/**
+		 * Update the screen
+		 * @param	e
+		 */
 		public function update(e:Event):void
 		{
 			this._screen.update();

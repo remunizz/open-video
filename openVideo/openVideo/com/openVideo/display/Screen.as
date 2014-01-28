@@ -75,11 +75,11 @@ package com.openVideo.display
 				var point:Point = new Point();
 				var item:BMDClip;
 				var i:int = this._arBMDClips.length - 1;
-				for (i; i >= 0 ; i--) 
+				for (i; i >= 0 ; i--)
 				{
 					item = this._arBMDClips[i];
-					point.x = Math.random() * this._rect.width;
-					point.y = Math.random() * this._rect.height;
+					point.x = item.x;
+					point.y = item.y;
 					this._BMD.copyPixels(item.bitmapData, item.rectangle, point, null, null, true);
 				}
 				
