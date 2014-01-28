@@ -20,6 +20,7 @@ package
 	{
 		[Embed(source = "../assets/textures/noscale/atlas.png")]
 		private var atlasClass:Class;
+		private var _pool:Vector.<BMDClip>;
 		
 		public const VIDEO_URL:String = "http://mirror.cessen.com/blender.org/peach/trailer/trailer_iphone.m4v";
 		
@@ -34,8 +35,36 @@ package
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			generateVideo();
+			stage.addEventListener(Event.ENTER_FRAME, update);
 		}
 		
+		/**
+		 * Update on ENTER_FRAME
+		 * @param	e
+		 */
+		private function update(e:Event):void 
+		{
+			var posX:Number;
+			var poolItem:BMDClip;
+			var i:int = 10;
+			for (i; i >= 0; i--)
+			{
+				poolItem = _pool[i];
+				posX = poolItem.x + 1;
+				if (posX > stage.fullScreenWidth + poolItem.rectangle.width)
+				{
+					posX = - poolItem.rectangle.width;
+					poolItem.y = Math.random()*stage.fullScreenHeight;
+				}
+				
+				poolItem.x = posX;
+				_pool[i] = poolItem;
+			}
+		}
+		
+		/**
+		 * create openVideo and 
+		 */
 		private function generateVideo():void 
 		{
 			var openVideo:OpenVideo = new OpenVideo(stage, VIDEO_URL);
@@ -45,12 +74,17 @@ package
 			var bmd:BitmapData = bmp.bitmapData;
 			
 			var i:int = 10;
-			var pool:Vector.<BMDClip> = new Vector.<BMDClip>(i);
+			var poolItem:BMDClip;
+			_pool = new Vector.<BMDClip>(i);
 			for (i; i >= 0; i--)
 			{
-				pool[i] = new BMDClip(bmd, new Rectangle(126, 654, 166, 164));
+				poolItem = new BMDClip(bmd, new Rectangle(126, 654, 166, 164));
+				poolItem.x = Math.random()*stage.fullScreenWidth;
+				poolItem.y = Math.random()*stage.fullScreenHeight;
+				_pool[i] = poolItem;
 			}
-			openVideo.addPool(pool);
+			
+			openVideo.addPool(_pool);
 			openVideo.startScreenMovie();
 		}
 		
