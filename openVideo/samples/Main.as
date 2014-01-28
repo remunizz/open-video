@@ -21,6 +21,8 @@ package
 		[Embed(source = "../assets/textures/noscale/atlas.png")]
 		private var atlasClass:Class;
 		
+		public const VIDEO_URL:String = "http://mirror.cessen.com/blender.org/peach/trailer/trailer_iphone.m4v";
+		
 		/**
 		 * Constructor
 		 */
@@ -31,7 +33,12 @@ package
 			stage.addEventListener(Event.DEACTIVATE, deactivate);
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
-			var openVideo:OpenVideo = new OpenVideo(stage, "http://mirror.cessen.com/blender.org/peach/trailer/trailer_iphone.m4v");
+			generateVideo();
+		}
+		
+		private function generateVideo():void 
+		{
+			var openVideo:OpenVideo = new OpenVideo(stage, VIDEO_URL);
 			this.addChild(openVideo);
 			
 			var bmp:Bitmap = new atlasClass() as Bitmap;
@@ -45,7 +52,6 @@ package
 			}
 			openVideo.addPool(pool);
 			openVideo.startScreenMovie();
-		
 		}
 		
 		private function deactivate(e:Event):void
